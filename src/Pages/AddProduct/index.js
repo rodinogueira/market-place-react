@@ -10,17 +10,22 @@ const AddProduct = () => {
     codigoBarras: 0,
     categorias: [{ _id: '' }]
   })
+
   const [categories, setCategories] = useState([]);
   console.log(categories)
-  
+
   useEffect(() => {
-    const response = getCategories()
-    setCategories(response)
+    getCategories()
   }, [])
 
   const getCategories = async () => {
-    const response = await findAllCategories()
-    console.log(response)
+    try{
+      const response = await findAllCategories();
+      setCategories(response)
+    } catch(error) {
+      console.error('Error during get categories:', error.message);
+      throw error;
+    }
   }
 
   return (
