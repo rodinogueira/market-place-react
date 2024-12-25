@@ -36,18 +36,20 @@ const AuthProvider = ({children}) => {
       }
     };
 
-    const findUser = async (userInfo) => {
+    const findUser = async (userInfo) => {      
+      if (!userInfo) {
+        console.error('User information is missing.');
+        return;
+      }
+
       try {
-        const user = JSON.parse(userInfo)
-        const { token, user: { _id: userId } } = user;
+        const { token, user: { _id: userId } } = JSON.parse(userInfo);
 
         api.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
         const response = await findUserById(userId)
-        const jsonStr = JSON.stringify(response.data)
-        const userParse = JSON.parse(jsonStr);
-
-        setUserFull(userParse)
+        console.log(response, 'findUser')
+        setUserFull(response)
       } catch (error) {
         console.error('Error during login:', error.message);
         throw error;
