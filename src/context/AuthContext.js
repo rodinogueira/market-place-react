@@ -11,7 +11,6 @@ const AuthProvider = ({children}) => {
     const [loading, setLoading] = useState(false)
     const [userFull, setUserFull] = useState({})
 
-    
     useEffect(() => {
       const userInfo = localStorage.getItem('userInfo');
       if (userInfo) {

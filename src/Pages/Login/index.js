@@ -25,14 +25,10 @@ const Login = () => {
       console.error('Email and password are required.');
       return;
     }
+
     const payload = { email: items.email, password: items.password };
-    console.log(payload)
-    try {
-      loginUser(payload);
-    } catch (error) {
-      // Handle network errors or other unexpected issues
-      console.error('Network Error:', error);
-    }
+
+    loginUser(payload);
   }
 
   return (
