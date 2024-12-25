@@ -25,17 +25,19 @@ const NavBar = () => {
                 <BsFillCartFill className='w-6 h-6 cursor-pointer' aria-label="Carrinho de compras" />
               </div>
 
-              {/* Avatar do Usuário */}
-              <img 
-                src='' 
-                alt='Usuário' 
-                className='w-8 h-8 rounded-full border border-gray-300' 
-              />
-
               {/* Informações do Usuário */}
-              <div onClick={logoutUser} className='flex items-center space-x-2 cursor-pointer bg-orange-500'>
+              <div className='flex items-center space-x-2 cursor-pointer bg-orange-500'>
                 <p className='text-gray-700 text-sm'>Nome Usuario</p>
-                <SlLogout 
+                <button onClick={() => navigate('/admin')}>Admin</button>
+                
+                {/* Avatar do Usuário */}
+                <img 
+                  src='' 
+                  alt='Usuário' 
+                  className='w-8 h-8 rounded-full border border-gray-300' 
+                />
+                <SlLogout
+                  onClick={logoutUser}
                   className='w-6 h-6 cursor-pointer hover:text-red-500 transition-colors' 
                   aria-label="Sair" 
                 />
