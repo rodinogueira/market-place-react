@@ -48,7 +48,7 @@ const AuthProvider = ({children}) => {
         api.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
         const response = await findUserById(userId)
-        console.log(response, 'findUser')
+
         setUserFull(response)
       } catch (error) {
         console.error('Error during login:', error.message);

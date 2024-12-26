@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react'
 import logo from '../../assets/logo.png'
 import { AuthContext } from '../../context/AuthContext'
 const Login = () => {
-
   const { loginUser } = useContext(AuthContext)
   const [items, setItens] = useState({
     email: '',
@@ -26,9 +25,15 @@ const Login = () => {
       return;
     }
 
-    const payload = { email: items.email, password: items.password };
+    const user = { email: items.email, password: items.password };
 
-    loginUser(payload);
+    try {
+      loginUser(user);
+    } catch (error) {
+      // Handle network errors or other unexpected issues
+      console.error('Network Error:', error);
+      throw error;
+    }
   }
 
   return (

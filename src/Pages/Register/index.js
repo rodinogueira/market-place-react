@@ -29,14 +29,21 @@ const Register = () => {
     //   console.error('Email and password are required.');
     //   return;
     // }
-    const payload = { name: items.name, email: items.email, password: items.password, images: items.images, admin: items.admin };
-    console.log(payload)
+    
+    const user = { name: items.name, email: items.email, password: items.password, images: items.images, admin: items.admin };
+    console.log(user)
+    userRegister(user);
+    navigate('/login')
+  }
+
+  const userRegister = async(user) => {
     try {
-      register(payload);
-      navigate('/login')
+      const response = await register(user);
+      return response;
     } catch (error) {
       // Handle network errors or other unexpected issues
       console.error('Network Error:', error);
+      throw error;
     }
   }
 
