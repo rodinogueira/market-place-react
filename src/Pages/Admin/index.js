@@ -1,8 +1,24 @@
-import React from 'react'
-import { useNavigate } from "react-router-dom";
-import { FaEdit, FaTrash } from 'react-icons/fa'
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate } from "react-router-dom";
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import { findAll } from '../../api/productService';
 const Admin = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+     const [products, setProducts] = useState([])
+
+    useEffect(() => {
+        findAllProducts()
+    }, []);
+
+    const findAllProducts = async () => {
+        try{
+            const response = await findAll();
+            console.log(response.data)
+            setProducts(response.data);
+        } catch(error) {
+            throw error;
+        }
+    }
     
     return (
         <section className='my-12 max-w-screen-xl mx-auto px-6'>
@@ -39,26 +55,30 @@ const Admin = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr className='bg-white border-b'>
-                                        <td className='px-6 py-4 whitespace-nowrap text-sm font-medium'>
-                                            <img src='' alt='' />
-                                        </td>
-                                        <td className='px-6 py-4 whitespace-nowrap text-sm font-medium'>
-                                            Produto 1
-                                        </td>
-                                        <td className='px-6 py-4 whitespace-nowrap text-sm font-medium'>
-                                            10
-                                        </td>
-                                        <td className='px-6 py-4 whitespace-nowrap text-sm font-medium'>
-                                            11111111
-                                        </td>
-                                        <td className='px-6 py-4 whitespace-nowrap flex h-24 items-center justify-center'>
-                                            <div className='flex flew-row items-center justify-center space-x-3'>
-                                                <FaEdit className='cursor-pointer text-2x1 text-green-600' />
-                                                <FaTrash className='cursor-pointer text-2x1 text-red-600' />
-                                            </div>
-                                        </td>
-                                    </tr>   
+                                    {products.map((product) => (
+                                        <tr key={product._id} className='bg-white border-b'>
+                                            <td className='px-6 py-4 whitespace-nowrap text-sm font-medium'>
+                                                <img className='w-16' src={product.imagem} alt={product.nome} />
+                                            </td>
+                                            <td className='px-6 py-4 whitespace-nowrap text-sm font-medium'>
+                                                {product.nome}
+                                            </td>
+                                            <td className='px-6 py-4 whitespace-nowrap text-sm font-medium'>
+                                                {product.precoUnitario}
+                                            </td>
+                                            <td className='px-6 py-4 whitespace-nowrap text-sm font-medium'>
+                                                {product.codigoBarra}
+                                            </td>
+                                            <td className='px-6 py-4 whitespace-nowrap flex h-24 items-center justify-center'>
+                                                <div className='flex flew-row items-center justify-center space-x-3'>                                                    
+                                                    <Link to={`/admin/edit-product/${product._id}`}>
+                                                        <FaEdit className='cursor-pointer text-2x1 text-green-600' />
+                                                    </Link>
+                                                    <FaTrash className='cursor-pointer text-2x1 text-red-600' />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
