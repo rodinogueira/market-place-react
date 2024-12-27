@@ -1,10 +1,11 @@
 import React from 'react'
 
-const Product = ({product}) => {
+const Product = ({ product }) => {
   return (
     <div className='bg-white border border-gray-100 transition transform duration-700 hover:scale-105 p-4 rounded-lg relative'>
-      <span className='bg-white border border-red-500 rounded-full text-primary text-sm inline-block mb-4'>{product.categoria}</span>
-      <img className='w-64 mx-auto transform transition duration-300 hover:scale-105' src={product.image} alt="" />
+      {/* <span className='bg-white border border-red-500 rounded-full text-primary text-sm inline-block mb-4'>{product.categoria}</span> */}
+      <span className='bg-white border border-red-500 rounded-full text-primary text-sm inline-block mb-4'>Brasileira</span>
+      <img className='w-64 mx-auto transform transition duration-300 hover:scale-105' src={product.imagem} alt="" />
       <div className='flex flex-col items-center my-3 space-y-2'>
         <h1 className='text-gray-900 text-lg'>{product.nome}</h1>
         <p className='text-gray-500 text-sm text-center'>{product.descricao}</p>
