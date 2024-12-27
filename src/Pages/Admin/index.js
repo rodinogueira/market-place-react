@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import { findAll } from '../../api/productService';
+import { findAll, del } from '../../api/productService';
 const Admin = () => {
     const navigate = useNavigate();
      const [products, setProducts] = useState([])
@@ -19,13 +19,22 @@ const Admin = () => {
             throw error;
         }
     }
+
+    const deleteProduct = async(id) => {
+        try{
+            await del(id)
+            findAllProducts()
+        } catch(error){
+            throw error;
+        }
+    }
     
     return (
         <section className='my-12 max-w-screen-xl mx-auto px-6'>
             <div className='flex justify-end space-y-2'>
                 <button 
                     onClick={() => navigate('/add-product')}
-                    className='w-44 bg-primary px-2 text-white ring-red-400 focus:outline-none  focus:ring-4 rounded-lg transition duration-300'
+                    className='w-44 bg-primary py-3 text-white ring-red-400 focus:outline-none  focus:ring-4 rounded-lg transition duration-300'
                 >
                     Adiciona produto
                 </button>
@@ -74,7 +83,7 @@ const Admin = () => {
                                                     <Link to={`/admin/edit-product/${product._id}`}>
                                                         <FaEdit className='cursor-pointer text-2x1 text-green-600' />
                                                     </Link>
-                                                    <FaTrash className='cursor-pointer text-2x1 text-red-600' />
+                                                    <FaTrash onClick={() => deleteProduct(product._id)} className='cursor-pointer text-2x1 text-red-600' />
                                                 </div>
                                             </td>
                                         </tr>

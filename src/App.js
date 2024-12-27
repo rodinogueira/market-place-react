@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
+import InfoProduct from "./pages/InfoProduct";
 import NotFound from "./pages/NotFound";
 import NavBar from "./components/NavBar";
 import AuthProvider from "./context/AuthContext"
@@ -29,6 +30,11 @@ function App() {
         <Route path="/admin/edit-product/:id" element={
           <PrivateRoutes>
             <EditProduct />
+          </PrivateRoutes>        
+        } />
+        <Route path="/info-product/:id" element={
+          <PrivateRoutes>
+            <InfoProduct />
           </PrivateRoutes>        
         } />
         <Route path="/admin" element={

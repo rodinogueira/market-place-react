@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import {findAllCategories} from '../../api/categoryService'
-import { edit, findById } from '../../api/productService'
-import { MultiSelect } from 'react-multi-select-component'
-import { useNavigate, useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import {findAllCategories} from '../../api/categoryService';
+import { edit, findById } from '../../api/productService';
+import { MultiSelect } from 'react-multi-select-component';
+import { useNavigate, useParams } from 'react-router-dom';
+
 const EditProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate()
@@ -58,7 +59,6 @@ const EditProduct = () => {
   const editProduct = async(id, newProduct) => {
     try {
       const response = await edit(id, newProduct)
-    //   console.log(response)
       return response;
     } catch (error) {
       // Handle network errors or other unexpected issues
