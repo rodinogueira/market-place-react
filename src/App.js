@@ -4,6 +4,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import AddProduct from "./pages/AddProduct";
+import EditProduct from "./pages/EditProduct";
 import NotFound from "./pages/NotFound";
 import NavBar from "./components/NavBar";
 import AuthProvider from "./context/AuthContext"
@@ -23,6 +24,11 @@ function App() {
         <Route path="/add-product" element={
           <PrivateRoutes>
             <AddProduct />
+          </PrivateRoutes>        
+        } />
+        <Route path="/admin/edit-product/:id" element={
+          <PrivateRoutes>
+            <EditProduct />
           </PrivateRoutes>        
         } />
         <Route path="/admin" element={
