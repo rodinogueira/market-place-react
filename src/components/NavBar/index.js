@@ -18,7 +18,7 @@ const NavBar = () => {
         </div>
         <div>
           {isLogged ? (
-            <div className='flex items-center justify-end space-x-6 bg-red-500'>
+            <div className='flex items-center justify-end space-x-6'>
               {/* Carrinho de Compras */}
               <div className='relative flex items-center bg-slate-600'>
                 <span className='bg-primary w-2 h-2 rounded-full absolute -right-2 -top-2'></span>
@@ -26,14 +26,14 @@ const NavBar = () => {
               </div>
 
               {/* Informações do Usuário */}
-              <div className='flex items-center space-x-2 cursor-pointer bg-orange-500'>
-                <p className='text-gray-700 text-sm'>Nome Usuario</p>
+              <div className='flex items-center space-x-2 cursor-pointer'>
+                <p className='text-gray-700 text-sm'>Usuario</p>
                 <button onClick={() => navigate('/admin')}>Admin</button>
                 
                 {/* Avatar do Usuário */}
                 <img 
                   src='' 
-                  alt='Usuário' 
+                  alt='User' 
                   className='w-8 h-8 rounded-full border border-gray-300' 
                 />
                 <SlLogout

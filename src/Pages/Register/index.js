@@ -74,7 +74,7 @@ const Register = () => {
                         value={items.images}
                     />
                 </div>
-                <button className='w-full py-3 mt-6 bg-primary text-white focus:outline-none focus:ring-4 rounded-lg transition duration-300'>
+                <button type='submit' className='w-full py-3 mt-6 bg-primary text-white focus:outline-none focus:ring-4 rounded-lg transition duration-300'>
                     Register
                 </button>
             </form>

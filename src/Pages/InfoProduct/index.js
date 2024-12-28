@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { AiOutlineMinusSquare, AiOutlinePlusSquare } from 'react-icons/ai';
 import { FiShoppingCart } from 'react-icons/fi';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { findById } from '../../api/productService'
 
 const ProductInfo = () => {
+  const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
   const [product, setProduct] = useState({});
@@ -40,6 +41,7 @@ const ProductInfo = () => {
     }
 
     localStorage.setItem('productCart', JSON.stringify(productCart));
+    navigate('/Cart');
   }
 
   return (

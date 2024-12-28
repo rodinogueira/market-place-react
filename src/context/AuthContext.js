@@ -14,7 +14,7 @@ const AuthProvider = ({children}) => {
     useEffect(() => {
       const userInfo = localStorage.getItem('userInfo');
       if (userInfo) {
-        findUser(userInfo);
+        findUser();
         setIsLogged(true);
       } else {
         console.log('User not logged'); 
@@ -49,7 +49,7 @@ const AuthProvider = ({children}) => {
 
         const response = await findUserById(userId)
 
-        setUserFull(response)
+        setUserFull(response.data)
       } catch (error) {
         console.error('Error during login:', error.message);
         throw error;

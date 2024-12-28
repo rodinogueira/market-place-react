@@ -5,6 +5,8 @@ import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
+import Complete from "./pages/Complete";
+import Cart from "./pages/Cart";
 import InfoProduct from "./pages/InfoProduct";
 import NotFound from "./pages/NotFound";
 import NavBar from "./components/NavBar";
@@ -30,6 +32,16 @@ function App() {
         <Route path="/admin/edit-product/:id" element={
           <PrivateRoutes>
             <EditProduct />
+          </PrivateRoutes>        
+        } />
+        <Route path="/cart" element={
+          <PrivateRoutes>
+            <Cart />
+          </PrivateRoutes>        
+        } />
+        <Route path="/complete" element={
+          <PrivateRoutes>
+            <Complete />
           </PrivateRoutes>        
         } />
         <Route path="/info-product/:id" element={
