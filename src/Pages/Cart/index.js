@@ -148,56 +148,56 @@ const Cart = () => {
                                 </div>
                             </div>
                         ))}
-                    </div>
-                    <div className='flex flex-col space-y-3 my-4'>
-                        <div className='flex items-center'>
-                            <span className='flex-grow poppins text-gray-700'>
-                                Total
-                            </span>
+                        <div className='flex flex-col space-y-3 my-4'>
+                            <div className='flex items-center'>
+                                <span className='flex-grow poppins text-gray-700'>
+                                    Total
+                                </span>
 
-                            <span className='flex-grow poppins text-gray-700'>
-                                ${totalValue}
-                            </span>
-                        </div>
-                        <div className='flex items-center'>
-                            <span className='flex-grow poppins text-gray-700'>
-                                Taxa de Entrega
-                            </span>
+                                <span className='flex-grow poppins text-gray-700'>
+                                    ${totalValue}
+                                </span>
+                            </div>
+                            <div className='flex items-center'>
+                                <span className='flex-grow poppins text-gray-700'>
+                                    Taxa de Entrega
+                                </span>
 
-                            <span className='flex-grow poppins text-gray-700'>
-                                5
-                            </span>
-                        </div>
-                        <div className='flex items-center'>
-                            <span className='flex-grow poppins text-gray-700'>
-                                Total + Taxa
-                            </span>
+                                <span className='flex-grow poppins text-gray-700'>
+                                    5
+                                </span>
+                            </div>
+                            <div className='flex items-center'>
+                                <span className='flex-grow poppins text-gray-700'>
+                                    Total + Taxa
+                                </span>
 
-                            <span className='flex-grow poppins text-gray-700'>
-                                R${totalValue + 5} 
-                            </span>
-                        </div>
-                        <div className='flex flex-col space-y4 mb-3'>
-                            <p className='poppins text-gray-700'>
-                                Endereço de Entrega
-                            </p>
-                            <span className='font-semibold text-black'>
-                                {address.rua}
-                            </span>
-                            <span className='font-semibold text-black'>
-                                {address.cep}
-                            </span>
-                            <span className='font-semibold text-black'>
-                                {address.complemento}
-                            </span>
-                            <span className='font-semibold text-black'>
-                                {address.numero}
-                            </span>
-                        </div>
-                        <div>
-                            <button onClick={sendOrder} className='w-full px-6 py-3 rounded-lg bg-primary text-white poppins ring-red-300 focus:ring-4 transition duration-500'>
-                                Enviar Pedido
-                            </button>
+                                <span className='flex-grow poppins text-gray-700'>
+                                    R${totalValue + 5} 
+                                </span>
+                            </div>
+                            <div className='flex flex-col space-y4 mb-3'>
+                                <p className='poppins text-gray-700'>
+                                    Endereço de Entrega
+                                </p>
+                                <span className='font-semibold text-black'>
+                                    {address.rua}
+                                </span>
+                                <span className='font-semibold text-black'>
+                                    {address.cep}
+                                </span>
+                                <span className='font-semibold text-black'>
+                                    {address.complemento}
+                                </span>
+                                <span className='font-semibold text-black'>
+                                    {address.numero}
+                                </span>
+                            </div>
+                            <div>
+                                <button onClick={sendOrder} className='w-full px-6 py-3 rounded-lg bg-primary text-white poppins ring-red-300 focus:ring-4 transition duration-500'>
+                                    Enviar Pedido
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
