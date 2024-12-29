@@ -14,7 +14,7 @@ const AddProduct = () => {
 
   const [categories, setCategories] = useState([]);
   const [selected, setSelected] = useState([]);
-  console.log(selected)
+
   useEffect(() => {
     getCategories()
   }, [])

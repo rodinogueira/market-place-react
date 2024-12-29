@@ -3,8 +3,11 @@ import { AiOutlineDelete } from 'react-icons/ai';
 import axios from 'axios';
 import { addOrder, send } from '../../api/orderService';
 import { useNavigate } from 'react-router-dom';
+import {AuthContext} from '../../context/AuthContext'
+
 const Cart = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const { userFull } = useContext(AuthContext);
     const [productCart, setProductCart] = useState([]);
     const [totalValue, setTotalValue] = useState(0);
     const [address, setAddress] = useState({
@@ -15,15 +18,18 @@ const Cart = () => {
     });
 
     useEffect(() => {
-        const storageCart = JSON.parse(localStorage.getItem('productCart'));
-        setProductCart(storageCart);
-
-        const total = productCart.reduce((valor, product) => {
-            return valor + product.precoUnitario * product.quantity;;
-        }, 0);
-
-        setTotalValue(total);
-    }, [productCart]);
+        const storedCart = localStorage.getItem('productCart');
+        if (storedCart) {
+            try {
+                const parsedCart = JSON.parse(storedCart);
+                setProductCart(parsedCart);
+                const total = parsedCart.reduce((acc, product) => acc + product.precoUnitario, 0);
+                setTotalValue(total);
+            } catch (error) {
+                console.error('Erro ao analisar o localStorage:', error);
+            }
+        }
+    }, []);
 
     const handleChange = (e) => {
         const {name, value} = e.target
@@ -56,23 +62,22 @@ const Cart = () => {
                 quantidade: product.quantity
             }
         });
+        
+        console.log(productsOrder,'productsOrder');
 
         const cartInfo = {
             produtos: productsOrder,
             frete: 5,
             precoTotal: 10,
+            userId: userFull.user._id
         }
 
         try {
           const response = await send(cartInfo);
-          console.log(response, 'response')
           if(response.data){
             const order = {
                 name: response.data.nome,
-                produtos: [{
-                    _id: '676e725bcdcad5a9638992f5',
-                    quantidade: 1
-                }],
+                produtos: productsOrder,
                 precoTotal: 10,
                 frete: 5,
                 concluido: true
@@ -128,8 +133,8 @@ const Cart = () => {
                             </form>
                         </div>
                     </div>
-                    <div className='flex flex-col space-y-3'>
-                        {productCart.map(product => (
+                    <div className='flex flex-col space-y-3 mt-20'>
+                        {/* {productCart.map(product => (
                             <div key={product._id} className='rounded-lg p-4 flex space-x-3'>
                                 <div className='flex'>
                                     <img className='w-24 object-contain' src={product.imagem} alt={product.nome} />
@@ -147,7 +152,7 @@ const Cart = () => {
                                     <AiOutlineDelete onClick={() => remove(product._id)} className='w-6 h-6 text-gray-600 transform transition hover:scale-105 duration-500 cursor-pointer' />
                                 </div>
                             </div>
-                        ))}
+                        ))} */}
                         <div className='flex flex-col space-y-3 my-4'>
                             <div className='flex items-center'>
                                 <span className='flex-grow poppins text-gray-700'>

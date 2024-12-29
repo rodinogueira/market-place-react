@@ -9,7 +9,7 @@ const ProductInfo = () => {
   const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
   const [product, setProduct] = useState({});
-
+  
   useEffect(() => {
     getProductById();
   },[])
@@ -30,17 +30,19 @@ const ProductInfo = () => {
         quantity: quantity,
       }
     ]
-    console.log(productCart)
-    const storageCart = JSON.stringify(localStorage.getItem('productCart'));
-
-    if(storageCart) {
-      productCart.push([
-        ...storageCart
-      ])
-      localStorage.setItem('productCart', JSON.stringify(productCart));
-    }
-
+    
     localStorage.setItem('productCart', JSON.stringify(productCart));
+    // const storageCart = JSON.stringify(localStorage.setItem('productCart'));
+
+    // if(storageCart) {
+    //   productCart.push([
+    //     ...storageCart
+    //   ])
+
+    //   localStorage.setItem('productCart', JSON.stringify(productCart));
+    // }
+
+    // localStorage.setItem('productCart', JSON.stringify(productCart));
     navigate('/Cart');
   }
 
