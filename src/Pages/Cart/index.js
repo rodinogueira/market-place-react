@@ -66,7 +66,7 @@ const Cart = () => {
         
         const cartInfo = {
             produtos: productsOrder,
-            frete: 5,
+            frete: frete,
             precoTotal: totalValue,
             userId: userFull.user._id
         }
