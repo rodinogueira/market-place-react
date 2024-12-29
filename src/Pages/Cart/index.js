@@ -24,7 +24,7 @@ const Cart = () => {
             try {
                 const parsedCart = JSON.parse(storedCart);
                 setProductCart(parsedCart);
-                const total = parsedCart.reduce((acc, product) => acc + product.precoUnitario, 0);
+                const total = parsedCart.reduce((acc, product) => acc + product.precoUnitario * product.quantity, 0);
                 setTotalValue(total);
             } catch (error) {
                 console.error('Erro ao analisar o localStorage:', error);
@@ -39,7 +39,7 @@ const Cart = () => {
           ...prev,
           [name]: value
         }))
-      }
+    }
 
     const remove = (id) => {
         const storageCart = JSON.parse(localStorage.getItem('productCart'));
@@ -66,9 +66,9 @@ const Cart = () => {
         
         const cartInfo = {
             produtos: productsOrder,
-            frete: 5,
+            frete: frete,
             precoTotal: totalValue,
-            userId: userFull.user._id
+            userId: userFull._id
         }
 
         try {

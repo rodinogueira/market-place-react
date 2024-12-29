@@ -24,27 +24,18 @@ const ProductInfo = () => {
   }
 
   const addToCart = () => {
-    const productCart = [
-      {
-        ...product,
-        quantity: quantity,
-      }
-    ]
-    
-    localStorage.setItem('productCart', JSON.stringify(productCart));
-    // const storageCart = JSON.stringify(localStorage.setItem('productCart'));
-
-    // if(storageCart) {
-    //   productCart.push([
-    //     ...storageCart
-    //   ])
-
-    //   localStorage.setItem('productCart', JSON.stringify(productCart));
-    // }
-
-    // localStorage.setItem('productCart', JSON.stringify(productCart));
+    const existingCart = JSON.parse(localStorage.getItem('productCart')) || [];
+    const productToAdd = {
+      ...product,
+      quantity: quantity,
+    };
+  
+    const updatedCart = [...existingCart, productToAdd];
+  
+    localStorage.setItem('productCart', JSON.stringify(updatedCart));
+  
     navigate('/Cart');
-  }
+  };
 
   return (
     <div className='max-w-screen mx-auto px-6 my-16'>

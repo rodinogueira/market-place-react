@@ -8,13 +8,15 @@ export const AuthContext = createContext();
 const AuthProvider = ({children}) => {
     const navigate = useNavigate();
     const [isLogged, setIsLogged] = useState(false)
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(() => {
+      return Boolean(localStorage.getItem('userInfo'));
+    })
     const [userFull, setUserFull] = useState({})
-
+    console.log(userFull, 'full')
     useEffect(() => {
       const userInfo = JSON.parse(localStorage.getItem('userInfo'));
       if (userInfo) {
-        findUser();
+        findUser(userInfo);
         setUserFull(userInfo);
         setIsLogged(true);
       } else {
@@ -44,13 +46,13 @@ const AuthProvider = ({children}) => {
       }
 
       try {
-        const { token, user: { _id: userId } } = JSON.parse(userInfo);
+        const { token, user: { _id: userId } } = userInfo
 
         api.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
         const response = await findUserById(userId)
 
-        setUserFull(response.data)
+        setUserFull(response.data);
       } catch (error) {
         console.error('Error during login:', error.message);
         throw error;
