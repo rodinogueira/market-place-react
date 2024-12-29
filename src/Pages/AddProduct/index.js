@@ -64,7 +64,6 @@ const AddProduct = () => {
       // categorias: categoriesId
     }
 
-    console.log(product);
     createProduct(product)
   }
 

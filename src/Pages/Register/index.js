@@ -31,7 +31,7 @@ const Register = () => {
     // }
     
     const user = { name: items.name, email: items.email, password: items.password, images: items.images, admin: items.admin };
-    console.log(user)
+
     userRegister(user);
     navigate('/login')
   }

@@ -12,7 +12,7 @@ const AuthProvider = ({children}) => {
       return Boolean(localStorage.getItem('userInfo'));
     })
     const [userFull, setUserFull] = useState({})
-    console.log(userFull, 'full')
+
     useEffect(() => {
       const userInfo = JSON.parse(localStorage.getItem('userInfo'));
       if (userInfo) {

@@ -14,13 +14,13 @@ const ProductList = () => {
   const findAllProducts = async () => {
       try{
           const response = await findAll();
-          console.log(response.data)
+
           setProducts(response.data);
       } catch(error) {
           throw error;
       }
   }
-  console.log(categoriaAtiva);
+
   return (
     <section className='my-12 max-w-screen-xl mx-auto px-3'>
         <div className='flex items-center justify-center space-x-6 '>

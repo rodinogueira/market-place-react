@@ -7,7 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 const EditProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate()
-  console.log(id)
+
   const [productForm, setProductForm] = useState({
     nome: '',
     descricao: '',

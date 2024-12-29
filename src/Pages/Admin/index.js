@@ -13,7 +13,6 @@ const Admin = () => {
     const findAllProducts = async () => {
         try{
             const response = await findAll();
-            console.log(response.data)
             setProducts(response.data);
         } catch(error) {
             throw error;
