@@ -10,6 +10,7 @@ const Cart = () => {
     const { userFull } = useContext(AuthContext);
     const [productCart, setProductCart] = useState([]);
     const [totalValue, setTotalValue] = useState(0);
+    const [frete] = useState(5);
     const [address, setAddress] = useState({
         rua: '',
         numero: '',
@@ -63,12 +64,10 @@ const Cart = () => {
             }
         });
         
-        console.log(productsOrder,'productsOrder');
-
         const cartInfo = {
             produtos: productsOrder,
             frete: 5,
-            precoTotal: 10,
+            precoTotal: totalValue,
             userId: userFull.user._id
         }
 
@@ -78,8 +77,8 @@ const Cart = () => {
             const order = {
                 name: response.data.nome,
                 produtos: productsOrder,
-                precoTotal: 10,
-                frete: 5,
+                precoTotal: totalValue + frete,
+                frete: frete,
                 concluido: true
             }
             const responseOrder = await addOrder(order);
@@ -134,7 +133,7 @@ const Cart = () => {
                         </div>
                     </div>
                     <div className='flex flex-col space-y-3 mt-20'>
-                        {/* {productCart.map(product => (
+                        {productCart.map(product => (
                             <div key={product._id} className='rounded-lg p-4 flex space-x-3'>
                                 <div className='flex'>
                                     <img className='w-24 object-contain' src={product.imagem} alt={product.nome} />
@@ -152,7 +151,7 @@ const Cart = () => {
                                     <AiOutlineDelete onClick={() => remove(product._id)} className='w-6 h-6 text-gray-600 transform transition hover:scale-105 duration-500 cursor-pointer' />
                                 </div>
                             </div>
-                        ))} */}
+                        ))}
                         <div className='flex flex-col space-y-3 my-4'>
                             <div className='flex items-center'>
                                 <span className='flex-grow poppins text-gray-700'>
