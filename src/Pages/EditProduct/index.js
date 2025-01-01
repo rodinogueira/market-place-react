@@ -58,8 +58,7 @@ const EditProduct = () => {
 
   const editProduct = async(id, newProduct) => {
     try {
-      const response = await edit(id, newProduct)
-      return response;
+      await edit(id, newProduct);
     } catch (error) {
       // Handle network errors or other unexpected issues
       console.error('Network Error:', error);
