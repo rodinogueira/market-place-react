@@ -69,8 +69,7 @@ const AddProduct = () => {
 
   const createProduct = async(product) => {
     try {
-      const response = await addProduct(product)
-      return response;
+      await addProduct(product)
     } catch (error) {
       // Handle network errors or other unexpected issues
       console.error('Network Error:', error);
