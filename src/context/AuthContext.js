@@ -8,9 +8,7 @@ export const AuthContext = createContext();
 const AuthProvider = ({children}) => {
     const navigate = useNavigate();
     const [isLogged, setIsLogged] = useState(false)
-    const [loading, setLoading] = useState(() => {
-      return Boolean(localStorage.getItem('userInfo'));
-    })
+    const [loading, setLoading] = useState(true)
     const [userFull, setUserFull] = useState({})
 
     useEffect(() => {
