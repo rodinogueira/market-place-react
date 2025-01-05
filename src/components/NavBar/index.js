@@ -1,13 +1,35 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import logo from '../../assets/logo.png'
 import { useNavigate } from "react-router-dom";
 import {AuthContext} from '../../context/AuthContext'
 import { BsFillCartFill } from 'react-icons/bs'
-import { SlLogout } from "react-icons/sl";
+import { SlLogout } from 'react-icons/sl';
+import { findCartById } from '../../api/cartService';
 
 const NavBar = () => {
   const navigate = useNavigate()
   const { isLogged, logoutUser } = useContext(AuthContext);
+  const [productsQuantityCart, setProductQuantityCart] = useState(0);
+
+  useEffect(() => {
+    findCart()
+  }, []);
+
+  const findCart = async() => {
+    const cartId = localStorage.getItem('carrinhoId');
+
+    try{
+      const response = await findCartById(cartId);
+      
+      const productQuantity = response.data.produtos.reduce((acc, product) => acc + product.quantidade, 0);
+      
+      console.log(productQuantity)
+      setProductQuantityCart(productQuantity);
+    } catch (error){
+      console.error(`Network Error: ${error}`);
+      throw error;
+    }
+  }
 
   return (
     <header className='bg-transparent z-50 w-full'>
@@ -21,8 +43,8 @@ const NavBar = () => {
             <div className='flex items-center justify-end space-x-6'>
               {/* Carrinho de Compras */}
               <div className='relative flex items-center bg-slate-600'>
-                <span className='bg-primary w-2 h-2 rounded-full absolute -right-2 -top-2'></span>
-                <BsFillCartFill className='w-6 h-6 cursor-pointer' aria-label="Carrinho de compras" />
+                <span className='bg-primary w-2 h-2 rounded-full absolute -right-2 -top-2'>{productsQuantityCart}</span>
+                <BsFillCartFill onClick={() => navigate('/admin/my-cart')} className='w-6 h-6 cursor-pointer bg-white' aria-label="Carrinho de compras" />
               </div>
 
               {/* Informações do Usuário */}

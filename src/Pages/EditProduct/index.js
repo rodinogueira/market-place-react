@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {findAllCategories} from '../../api/categoryService';
-import { edit, findById } from '../../api/productService';
+import { edit, findProductById } from '../../api/productService';
 import { MultiSelect } from 'react-multi-select-component';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -68,7 +68,7 @@ const EditProduct = () => {
 
   const findProduct = async(id) => {
     try {
-      const response = await findById(id);
+      const response = await findProductById(id);
       setProductForm(response.data);
     } catch (error) {
       // Handle network errors or other unexpected issues

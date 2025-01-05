@@ -7,6 +7,7 @@ import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
 import Complete from "./pages/Complete";
 import Cart from "./pages/Cart";
+import MyCart from "./pages/MyCart";
 import InfoProduct from "./pages/InfoProduct";
 import NotFound from "./pages/NotFound";
 import NavBar from "./components/NavBar";
@@ -37,6 +38,11 @@ function App() {
         <Route path="/cart" element={
           <PrivateRoutes>
             <Cart />
+          </PrivateRoutes>        
+        } />
+        <Route path="/admin/my-cart" element={
+          <PrivateRoutes>
+            <MyCart />
           </PrivateRoutes>        
         } />
         <Route path="/complete" element={
