@@ -10,6 +10,7 @@ const NavBar = () => {
   const navigate = useNavigate()
   const { isLogged, logoutUser } = useContext(AuthContext);
   const [productsQuantityCart, setProductQuantityCart] = useState(0);
+  const [cartId, setCartId] = useState('');
 
   useEffect(() => {
     findCart()
@@ -17,7 +18,8 @@ const NavBar = () => {
 
   const findCart = async() => {
     const cartId = localStorage.getItem('carrinhoId');
-
+    setCartId(cartId);
+    
     try{
       const response = await findCartById(cartId);
       
@@ -44,7 +46,7 @@ const NavBar = () => {
               {/* Carrinho de Compras */}
               <div className='relative flex items-center bg-slate-600'>
                 <span className='bg-primary w-2 h-2 rounded-full absolute -right-2 -top-2'>{productsQuantityCart}</span>
-                <BsFillCartFill onClick={() => navigate('/admin/my-cart')} className='w-6 h-6 cursor-pointer bg-white' aria-label="Carrinho de compras" />
+                <BsFillCartFill onClick={() => navigate('/admin/my-cart', { state: { carrinhoId: cartId } })} className='w-6 h-6 cursor-pointer bg-white' aria-label="Carrinho de compras" />
               </div>
 
               {/* Informações do Usuário */}
