@@ -1,31 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { findCartById } from '../../api/cartService';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const MyCart = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { carrinhoId } = location.state;
   const [cart, setCart] = useState(null);
-  console.log('Carrinho ID recebido:', carrinhoId);  
-  console.log('Carrinho:', cart);  
+
+  // Recuperar o carrinhoId do localStorage
+  const cartId = localStorage.getItem('carrinhoId');
 
   useEffect(() => {
     const fetchCart = async () => {
-      if (!carrinhoId) {
+      if (!cartId) {
         console.error('Carrinho ID não encontrado.');
         return;
       }
 
       try {
-        const response = await findCartById(carrinhoId);
+        const response = await findCartById(cartId);
         setCart(response.data);
       } catch (error) {
         console.error('Erro ao buscar carrinho:', error);
       }
     };
+
+    // Chama a função para buscar os dados do carrinho
     fetchCart();
-  }, []);
+  }, [cartId]); // O useEffect agora depende do cartId
 
   if (!cart) {
     return (
@@ -59,9 +60,9 @@ const MyCart = () => {
             </div>
           ))}
           <div>
-              <p className="text-sm text-gray-600">
-                Total: {cart.precoTotal}
-              </p>
+            <p className="text-sm text-gray-600">
+              Total: {cart.precoTotal}
+            </p>
           </div>
         </div>
       )}
