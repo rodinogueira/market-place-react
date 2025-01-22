@@ -13,7 +13,7 @@ const ProductInfo = () => {
 
   const frete = 5;
   const product = useProduct(id);
-  const { cart, addToCart } = useCart(userFull._id, frete);
+  const { addToCart } = useCart(userFull._id, frete);
 
   const [quantity, setQuantity] = useState(1);
 
