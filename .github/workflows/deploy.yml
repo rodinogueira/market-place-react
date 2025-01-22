@@ -25,7 +25,7 @@ jobs:
       # Passo 3: Instalar dependências (se necessário)
       - name: Instalar dependências
         run: |
-          npm install  # ou outro comando de instalação de dependências
+          npm install --legacy-peer-deps # ou outro comando de instalação de dependências
 
       # Passo 4: Rodar testes (opcional)
       - name: Rodar testes
