@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import logo from '../../assets/logo.png'
 import { register } from '../../api/userAuth';
 import { useNavigate } from 'react-router-dom';
