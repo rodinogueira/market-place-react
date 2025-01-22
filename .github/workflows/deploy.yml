@@ -22,37 +22,30 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      # Passo 3: Instalar dependências (se necessário)
+      # Passo 3: Instalar dependências
       - name: Instalar dependências
-        run: |
-          npm install --legacy-peer-deps --force # ou outro comando de instalação de dependências
+        run: npm install --legacy-peer-deps --force
 
-      # Passo 4: Rodar testes (opcional)
-      # - name: Rodar testes
-      #   run: npm test  # ou outro comando de teste do seu projeto
-
-      # Passo 5: Gerar o build (se aplicável)
+      # Passo 4: Gerar o build
       - name: Gerar build
-        run: npm run build  # ou outro comando de build, dependendo do seu projeto
+        run: npm run build
 
-      # Passo 6: Deploy para EC2
+      # Passo 5: Deploy para EC2
       - name: Fazer deploy para EC2
         run: |
           # Salvar a chave SSH privada em um arquivo temporário
           echo "${{ secrets.EC2_PRIVATE_KEY }}" > my-key
           chmod 600 my-key
 
-          echo "${{ secrets.EC2_PRIVATE_KEY }}" > my-key
           # Copiar arquivos do build para a instância EC2
-          # scp -i my-key -o StrictHostKeyChecking=no -r ./build/* ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}/usr/share/nginx/html
+          scp -i my-key -o StrictHostKeyChecking=no -r ./build/* ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/build
+
+          # Conectar à instância EC2 e mover os arquivos para o diretório do servidor
           ssh -i my-key -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-          sudo mv /home/${{ secrets.EC2_USER }}/build/* /usr/share/nginx/html/
-          ssh -i my-key -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-            cd /usr/share/nginx/html
-            # Comandos para reiniciar ou atualizar o servidor
-            pm2 restart all  # Ou outro comando para rodar sua aplicação, como 'npm start', 'pm2', etc.
+            sudo mv /home/${{ secrets.EC2_USER }}/build/* /usr/share/nginx/html/
+            sudo systemctl restart nginx  # Reinicia o NGINX para refletir as mudanças
           EOF
+
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
           EC2_USER: ${{ secrets.EC2_USER }}
-
