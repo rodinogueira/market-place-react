@@ -44,8 +44,9 @@ jobs:
 
           echo "${{ secrets.EC2_PRIVATE_KEY }}" > my-key
           # Copiar arquivos do build para a instância EC2
-          scp -i my-key -o StrictHostKeyChecking=no -r ./build/* ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}/usr/share/nginx/html
-          # Conectar via SSH e reiniciar o servidor (exemplo de comando)
+          # scp -i my-key -o StrictHostKeyChecking=no -r ./build/* ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}/usr/share/nginx/html
+          ssh -i my-key -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+          sudo mv /home/${{ secrets.EC2_USER }}/build/* /usr/share/nginx/html/
           ssh -i my-key -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             cd /usr/share/nginx/html
             # Comandos para reiniciar ou atualizar o servidor
