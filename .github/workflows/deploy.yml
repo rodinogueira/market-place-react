@@ -40,14 +40,10 @@ jobs:
         run: |
           # Salvar a chave SSH privada em um arquivo temporário
           echo "${{ secrets.EC2_PRIVATE_KEY }}" > private_key.pem
-          chmod 600 private_key.pem
-
-          # Remover todos os arquivos no diretório de destino
-          echo "Removendo arquivos antigos do diretório de destino..."
-          sudo rm -rf /usr/share/nginx/html/*
+          sudo chmod 600 private_key.pem
 
           # Copiar arquivos do build para a instância EC2
-          scp -i private_key.pem -o StrictHostKeyChecking=no -r ./build/ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}/usr/share/nginx/html
+          sudo scp -i private_key.pem -o StrictHostKeyChecking=no -r ./build/ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}/usr/share/nginx/html
           # Conectar via SSH e reiniciar o servidor (exemplo de comando)
           ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             cd /usr/share/nginx/html
