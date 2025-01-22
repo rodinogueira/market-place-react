@@ -22,7 +22,7 @@ const EditProduct = () => {
   useEffect(() => {
     findProduct(id)
     getCategories()
-  }, [])
+  }, [id])
 
   const getCategories = async () => {
     try{
