@@ -34,15 +34,10 @@ jobs:
           ls -la ./build
 
           # Criar um diretório remoto na instância EC2
-          ssh -i my-key -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "mkdir -p /home/${{ secrets.EC2_USER }}/build"
+          ssh -i my-key -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "mkdir -p /home/${{ secrets.EC2_USER }}/frontend"
 
           # Copiar arquivos do build para a instância EC2
           scp -i my-key -o StrictHostKeyChecking=no -r ./build/* ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/usr/share/nginx/html/
-
-          # Conectar à instância EC2 e mover os arquivos para o diretório do servidor
-          ssh -i my-key -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-            sudo mkdir -p /usr/share/nginx/html
-            sudo cp -r /home/${{ secrets.EC2_USER }}/build/* /usr/share/nginx/html/
             sudo systemctl restart nginx
           EOF
 
