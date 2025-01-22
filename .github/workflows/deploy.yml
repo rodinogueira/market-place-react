@@ -1,0 +1,57 @@
+name: CI/CD Pipeline para EC2
+
+on:
+  push:
+    branches:
+      - main  # Executa o pipeline ao fazer push na branch 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Usando Ubuntu como runner do GitHub Actions
+
+    steps:
+      # Passo 1: Fazer checkout do código
+      - name: Checkout do código
+        uses: actions/checkout@v2
+
+      # Passo 2: Configurar credenciais da AWS
+      - name: Configurar credenciais AWS
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      # Passo 3: Instalar dependências (se necessário)
+      - name: Instalar dependências
+        run: |
+          npm install  # ou outro comando de instalação de dependências
+
+      # Passo 4: Rodar testes (opcional)
+      - name: Rodar testes
+        run: npm test  # ou outro comando de teste do seu projeto
+
+      # Passo 5: Gerar o build (se aplicável)
+      - name: Gerar build
+        run: npm run build  # ou outro comando de build, dependendo do seu projeto
+
+      # Passo 6: Deploy para EC2
+      - name: Fazer deploy para EC2
+        run: |
+          # Salvar a chave SSH privada em um arquivo temporário
+          echo "${{ secrets.EC2_PRIVATE_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+
+          # Copiar arquivos do build para a instância EC2
+          scp -i private_key.pem -o StrictHostKeyChecking=no -r ./build/ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/caminho/do/destino
+
+          # Conectar via SSH e reiniciar o servidor (exemplo de comando)
+          ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            cd /caminho/do/destino
+            # Comandos para reiniciar ou atualizar o servidor
+            pm2 restart all  # Ou outro comando para rodar sua aplicação, como 'npm start', 'pm2', etc.
+          EOF
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USER: ${{ secrets.EC2_USER }}
+
