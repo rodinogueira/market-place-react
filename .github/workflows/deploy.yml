@@ -33,9 +33,6 @@ jobs:
           echo "Verificando arquivos no diretório de build:"
           ls -la ./build
 
-          # Criar um diretório remoto na instância EC2
-          ssh -i my-key -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "mkdir -p /home/${{ secrets.EC2_USER }}/frontend"
-
           # Copiar arquivos do build para a instância EC2
           scp -i my-key -o StrictHostKeyChecking=no -r ./build/* ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/usr/share/nginx/html/
             sudo systemctl restart nginx
