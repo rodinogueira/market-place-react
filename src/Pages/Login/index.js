@@ -41,6 +41,10 @@ const Login = () => {
         <div className='flex flex-col items-center justify-center pt-20 h-screen'>
             <img className="w-36 h-20" src={logo} alt='logotipo food app' />
             <img className="w-36 h-20" src={logo} alt='logotipo food app' />
+                <img className="w-36 h-20" src={logo} alt='logotipo food app' />
+            <img className="w-36 h-20" src={logo} alt='logotipo food app' />
+                <img className="w-36 h-20" src={logo} alt='logotipo food app' />
+            <img className="w-36 h-20" src={logo} alt='logotipo food app' />
             <form action='' onSubmit={handleSubmit} className='bg-white w-96 mt-6 p-4 rounded-lg shadow-lg'>
                 <div className='flew flew-col space-y-6'>
                     <input type='email' placeholder='Digite seu email:' name='email'
