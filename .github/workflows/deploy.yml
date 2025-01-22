@@ -14,36 +14,32 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v2
 
-      # Passo 2: Configurar credenciais da AWS
-      - name: Configurar credenciais AWS
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      # Passo 3: Instalar dependências
+      # Passo 2: Instalar dependências
       - name: Instalar dependências
         run: npm install --legacy-peer-deps --force
 
-      # Passo 4: Gerar o build
+      # Passo 3: Gerar o build
       - name: Gerar build
         run: npm run build
 
-      # Passo 5: Deploy para EC2
+      # Passo 4: Fazer deploy para EC2
       - name: Fazer deploy para EC2
         run: |
           # Salvar a chave SSH privada em um arquivo temporário
           echo "${{ secrets.EC2_PRIVATE_KEY }}" > my-key
           chmod 600 my-key
 
+          # Verificar o diretório de build
+          ls -la ./build
+
           # Copiar arquivos do build para a instância EC2
           scp -i my-key -o StrictHostKeyChecking=no -r ./build/* ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/build
 
           # Conectar à instância EC2 e mover os arquivos para o diretório do servidor
           ssh -i my-key -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-            sudo mv /home/${{ secrets.EC2_USER }}/build/* /usr/share/nginx/html/
-            sudo systemctl restart nginx  # Reinicia o NGINX para refletir as mudanças
+            sudo mkdir -p /usr/share/nginx/html
+            sudo cp -r /home/${{ secrets.EC2_USER }}/build/* /usr/share/nginx/html/
+            sudo systemctl restart nginx
           EOF
 
         env:
