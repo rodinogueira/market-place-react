@@ -45,7 +45,7 @@ jobs:
           # Copiar arquivos do build para a instância EC2
           sudo scp -i private_key.pem -o StrictHostKeyChecking=no -r ./build/ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}/usr/share/nginx/html
           # Conectar via SSH e reiniciar o servidor (exemplo de comando)
-          ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -i my-key -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             cd /usr/share/nginx/html
             # Comandos para reiniciar ou atualizar o servidor
             pm2 restart all  # Ou outro comando para rodar sua aplicação, como 'npm start', 'pm2', etc.
