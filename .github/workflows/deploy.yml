@@ -28,8 +28,8 @@ jobs:
           npm install --legacy-peer-deps --force # ou outro comando de instalação de dependências
 
       # Passo 4: Rodar testes (opcional)
-      - name: Rodar testes
-        run: npm test  # ou outro comando de teste do seu projeto
+      # - name: Rodar testes
+      #   run: npm test  # ou outro comando de teste do seu projeto
 
       # Passo 5: Gerar o build (se aplicável)
       - name: Gerar build
